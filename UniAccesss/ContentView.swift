@@ -1,24 +1,2 @@
-//
-//  ContentView.swift
-//  UniAccesss
-//
-//  Created by Onesto on 02/06/26.
-//
-
+// Archivo generado por Xcode — no utilizado en este proyecto
 import SwiftUI
-
-struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
-    }
-}
-
-#Preview {
-    ContentView()
-}

@@ -6,12 +6,21 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct UniAccesssApp: App {
+    let container: ModelContainer = {
+        let schema = Schema([UserAccount.self])
+        let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+        return try! ModelContainer(for: schema, configurations: [config])
+    }()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SplashView()
+                .modelContainer(container)
+                .environmentObject(UserSession.shared)
         }
     }
 }
