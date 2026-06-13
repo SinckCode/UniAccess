@@ -1,4 +1,5 @@
 import SwiftUI
+import Combine
 
 struct HorarioAlumnoView: View {
     @EnvironmentObject private var session: UserSession
