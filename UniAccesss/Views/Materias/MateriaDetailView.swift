@@ -65,6 +65,8 @@ struct MateriaDetailView: View {
                 row("Semestre", "\(materia.semestre)")
                 row("Carrera", nombreCarrera)
                 row("Profesor", nombreProfesor)
+                if let dia = materia.diaSemana, !dia.isEmpty { row("Dias", dia) }
+                if let hora = materia.hora, !hora.isEmpty { row("Horario", hora) }
             }
         }
     }

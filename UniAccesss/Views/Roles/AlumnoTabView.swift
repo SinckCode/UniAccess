@@ -9,11 +9,11 @@ struct AlumnoTabView: View {
             NavigationStack { MisMateriasAlumnoView() }
                 .tabItem { Label("Materias", systemImage: "book.fill") }
 
-            NavigationStack { PlaceholderView(title: "Horario", icon: "calendar") }
+            NavigationStack { HorarioAlumnoView() }
                 .tabItem { Label("Horario", systemImage: "calendar") }
 
-            NavigationStack { PlaceholderView(title: "Avisos", icon: "bell.fill") }
-                .tabItem { Label("Avisos", systemImage: "bell.fill") }
+            NavigationStack { CalificacionesAlumnoView() }
+                .tabItem { Label("Calificaciones", systemImage: "checkmark.seal.fill") }
 
             NavigationStack { AlumnoPerfilView() }
                 .tabItem { Label("Perfil", systemImage: "person.fill") }

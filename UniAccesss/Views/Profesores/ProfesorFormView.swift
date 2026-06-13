@@ -33,8 +33,10 @@ struct ProfesorFormView: View {
 
                 Section("Profesional") {
                     StyledTextField(label: "Especialidad", placeholder: "Ingenieria Civil (opcional)", icon: "star", text: $especialidad)
-                    Toggle("Estatus: Activo", isOn: $activo)
-                        .tint(Color(hex: "#2E7D32"))
+                    if isEditing {
+                        Toggle("Estatus: Activo", isOn: $activo)
+                            .tint(Color(hex: "#2E7D32"))
+                    }
                 }
                 .listRowBackground(Color.clear).listRowSeparator(.hidden)
 

@@ -1,4 +1,5 @@
 import Foundation
+import Combine
 import SwiftData
 
 enum Rol: String, Codable {

@@ -13,6 +13,8 @@ struct MateriaFormView: View {
     @State private var semestre = 1
     @State private var idCarrera = 0
     @State private var idProfesor = 0
+    @State private var diaSemana = ""
+    @State private var hora = ""
 
     private var isEditing: Bool { materia != nil }
 
@@ -42,6 +44,12 @@ struct MateriaFormView: View {
                     }
                 }
 
+                Section("Horario (opcional)") {
+                    StyledTextField(label: "Dias", placeholder: "Lunes-Miercoles", icon: "calendar", text: $diaSemana)
+                    StyledTextField(label: "Hora", placeholder: "08:00-10:00", icon: "clock", text: $hora)
+                }
+                .listRowBackground(Color.clear).listRowSeparator(.hidden)
+
                 Section {
                     PrimaryButton(title: isEditing ? "Actualizar" : "Guardar", action: guardar, isLoading: vm.isLoading)
                 }
@@ -60,11 +68,17 @@ struct MateriaFormView: View {
         guard let m = materia else { return }
         nombre = m.nombre; clave = m.clave; creditos = m.creditos
         semestre = m.semestre; idCarrera = m.idCarrera; idProfesor = m.idProfesor
+        diaSemana = m.diaSemana ?? ""; hora = m.hora ?? ""
     }
 
     private func guardar() {
         guard !nombre.isEmpty, !clave.isEmpty, idCarrera != 0, idProfesor != 0 else { return }
-        let item = Materia(idMateria: materia?.idMateria, nombre: nombre, clave: clave, creditos: creditos, semestre: semestre, idCarrera: idCarrera, idProfesor: idProfesor)
+        let item = Materia(
+            idMateria: materia?.idMateria, nombre: nombre, clave: clave, creditos: creditos,
+            semestre: semestre, idCarrera: idCarrera, idProfesor: idProfesor,
+            diaSemana: diaSemana.isEmpty ? nil : diaSemana,
+            hora: hora.isEmpty ? nil : hora
+        )
         Task {
             if isEditing { await vm.update(item) } else { await vm.save(item) }
             if !vm.showError { dismiss() }

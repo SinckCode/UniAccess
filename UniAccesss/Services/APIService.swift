@@ -36,6 +36,13 @@ class APIService {
         return try decode([T].self, from: data)
     }
 
+    func getList<T: Decodable>(path: String) async throws -> [T] {
+        let url = try makeURL(path)
+        let (data, response) = try await URLSession.shared.data(from: url)
+        try validateResponse(response)
+        return try decode([T].self, from: data)
+    }
+
     func getById<T: Decodable>(endpoint: String, id: Int) async throws -> T {
         let url = try makeURL("\(endpoint)/get/\(id)")
         let (data, response) = try await URLSession.shared.data(from: url)

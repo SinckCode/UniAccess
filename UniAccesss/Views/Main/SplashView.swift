@@ -1,7 +1,9 @@
 import SwiftUI
+import SwiftData
 
 struct SplashView: View {
     @EnvironmentObject private var session: UserSession
+    @Environment(\.modelContext) private var context
     @State private var isActive = false
 
     var body: some View {
@@ -40,9 +42,19 @@ struct SplashView: View {
                 }
             }
             .task {
+                AuthService.shared.seedCuentasDemo(context: context)
+                autoLogin()
                 try? await Task.sleep(nanoseconds: 2_000_000_000)
                 withAnimation { isActive = true }
             }
+        }
+    }
+
+    @MainActor
+    private func autoLogin() {
+        guard let correo = session.savedEmail else { return }
+        if let user = AuthService.shared.loginBySavedSession(correo: correo, context: context) {
+            session.login(user: user)
         }
     }
 }

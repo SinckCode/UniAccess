@@ -33,7 +33,10 @@ struct AlumnoFormView: View {
                 .listRowBackground(Color.clear).listRowSeparator(.hidden)
 
                 Section("Datos Academicos") {
-                    StyledTextField(label: "Matricula", placeholder: "202104593", icon: "number", text: $matricula)
+                    if isEditing {
+                        LabeledContent("Matricula", value: matricula)
+                            .font(.subheadline)
+                    }
                     Picker("Semestre", selection: $semestre) {
                         ForEach(1...12, id: \.self) { Text("Semestre \($0)").tag($0) }
                     }
@@ -77,12 +80,19 @@ struct AlumnoFormView: View {
         if let d = AlumnoFormView.dateFormatter.date(from: a.fechaIngreso) { fechaIngreso = d }
     }
 
+    private func generarMatricula() -> String {
+        let anio = Calendar.current.component(.year, from: Date())
+        let sufijo = Int.random(in: 10000...99999)
+        return "A\(anio)\(sufijo)"
+    }
+
     private func guardar() {
-        guard !nombre.isEmpty, !apellidoPaterno.isEmpty, !matricula.isEmpty, !correo.isEmpty, idCarreraSeleccionada != 0 else { return }
+        guard !nombre.isEmpty, !apellidoPaterno.isEmpty, !correo.isEmpty, idCarreraSeleccionada != 0 else { return }
+        let matriculaFinal = isEditing ? matricula : generarMatricula()
         let item = Alumno(
             idAlumno: alumno?.idAlumno, nombre: nombre, apellidoPaterno: apellidoPaterno,
             apellidoMaterno: apellidoMaterno.isEmpty ? nil : apellidoMaterno,
-            matricula: matricula, correo: correo, telefono: telefono.isEmpty ? nil : telefono,
+            matricula: matriculaFinal, correo: correo, telefono: telefono.isEmpty ? nil : telefono,
             semestre: semestre, idCarrera: idCarreraSeleccionada,
             fechaIngreso: AlumnoFormView.dateFormatter.string(from: fechaIngreso),
             estatus: activo ? "activo" : "inactivo"

@@ -8,6 +8,8 @@ struct Materia: Codable, Identifiable, Hashable {
     var semestre: Int
     var idCarrera: Int
     var idProfesor: Int
+    var diaSemana: String?
+    var hora: String?
 
     var id: Int { idMateria ?? 0 }
 }

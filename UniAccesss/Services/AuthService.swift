@@ -5,6 +5,13 @@ import SwiftData
 class AuthService {
     static let shared = AuthService()
 
+    func loginBySavedSession(correo: String, context: ModelContext) -> UserAccount? {
+        let descriptor = FetchDescriptor<UserAccount>(
+            predicate: #Predicate { $0.correo == correo }
+        )
+        return try? context.fetch(descriptor).first
+    }
+
     func login(correo: String, password: String, context: ModelContext) throws -> UserAccount {
         let descriptor = FetchDescriptor<UserAccount>(
             predicate: #Predicate { $0.correo == correo && $0.password == password }
