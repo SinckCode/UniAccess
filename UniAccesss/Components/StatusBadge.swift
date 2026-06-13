@@ -2,10 +2,8 @@ import SwiftUI
 
 struct StatusBadge: View {
     let text: String
-    var color: Color? = nil
 
-    private var resolvedColor: Color {
-        if let c = color { return c }
+    private var color: Color {
         switch text.lowercased() {
         case "activo":    return Color(hex: "#2E7D32")
         case "inactivo":  return Color(hex: "#D32F2F")
@@ -22,7 +20,7 @@ struct StatusBadge: View {
             .foregroundColor(.white)
             .padding(.horizontal, 10)
             .padding(.vertical, 4)
-            .background(resolvedColor)
+            .background(color)
             .cornerRadius(20)
     }
 }
